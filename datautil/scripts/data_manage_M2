@@ -1,0 +1,67 @@
+#!/bin/bash
+
+# Example run
+#./arrangedata /scratch/group/astro/data/ROTSE/rotse21/disk2/rotse3 140904 3b
+
+indir="$1"
+ndate="$2"
+tele="$3"
+
+imgfiles=$indir'/'$ndate'/image/'
+prodfiles=$indir'/'$ndate'/prod/'
+
+yy=${ndate:0:2}
+mm=${ndate:2:2}
+dd=${ndate:4:2}
+
+echo $yy $mm $dd
+
+outpath='/users/gdhungana/test_m2/m2manage'
+#outpath='/scratch/group/astro/data/ROTSE'
+outdir=$outpath'/rotse/'${tele}'/'$yy'/'$mm'/'$dd
+
+outimg=$outdir'/image/'
+outprod=$outdir'/prod/'
+
+coaddimg=$outdir'/coadd/image/'
+coaddprod=$outdir'/coadd/prod/'
+
+if [ ! -d "$outimg$" ]; then
+    echo $outimg does not exist. Writing the directory
+    mkdir -p "$outimg"
+fi
+ 
+if [ ! -d "$outprod" ]; then
+    echo $outprod does not exist. Writing the directory
+    mkdir -p "$outprod"
+fi
+
+#- copy images and prod
+for im in $imgfiles/*; do
+    if [[ $im = *"-0"* ]]; then
+        echo 'copying' $im to $coaddimg;
+        if [ ! -d "$coaddimg$" ]; then
+            echo $coaddimg does not exist. Writing the directory;
+            mkdir -p "$coaddimg"
+        fi
+        cp $im $coaddimg
+    else
+        echo 'copying '$im to $outimg;
+        cp $im $outimg
+    fi
+done
+
+for pp in $prodfiles/*; do
+    if [[ $pp = *"-0"* ]]; then
+        echo 'copying' $pp to $coaddprod;
+        if [ ! -d "$coaddprod" ]; then
+            echo $coaddprod does not exist. Writing the directory
+            mkdir -p "$coaddprod"
+        fi
+        cp $pp $coaddprod
+    else
+        echo 'copying '$pp to $outprod;
+        cp $pp $outprod
+
+done
+
