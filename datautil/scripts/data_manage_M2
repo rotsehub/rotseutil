@@ -16,8 +16,8 @@ dd=${ndate:4:2}
 
 echo $yy $mm $dd
 
-outpath='/users/gdhungana/test_m2/m2manage'
-#outpath='/scratch/group/astro/data/ROTSE'
+#outpath='/users/gdhungana/test_m2/m2manage'
+outpath='/scratch/group/astro/data/ROTSE'
 outdir=$outpath'/rotse/'${tele}'/'$yy'/'$mm'/'$dd
 
 logfile=$outpath'/rotse/'$ndate'_'$tele'_copylog.txt'
