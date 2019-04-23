@@ -20,6 +20,10 @@ outpath='/users/gdhungana/test_m2/m2manage'
 #outpath='/scratch/group/astro/data/ROTSE'
 outdir=$outpath'/rotse/'${tele}'/'$yy'/'$mm'/'$dd
 
+logfile=$outpath'/rotse/'$ndate'_'$tele'_copylog.txt'
+echo Log file is $logfile
+
+
 outimg=$outdir'/image/'
 outprod=$outdir'/prod/'
 
@@ -38,8 +42,9 @@ fi
 
 #- copy images and prod
 for im in $imgfiles/*; do
-    if [[ $im = *"-0"* ]]; then
+    if [[ $im = *${tele}*"-0"* ]]; then
         echo 'copying' $im to $coaddimg;
+        echo $im '  ----  ' $coaddimg $'\r' >> $logfile
         if [ ! -d "$coaddimg$" ]; then
             echo $coaddimg does not exist. Writing the directory;
             mkdir -p "$coaddimg"
@@ -47,13 +52,15 @@ for im in $imgfiles/*; do
         cp $im $coaddimg
     else
         echo 'copying '$im to $outimg;
+        echo $im ' ----  ' $outimg $'\r' >> $logfile
         cp $im $outimg
     fi
 done
 
 for pp in $prodfiles/*; do
-    if [[ $pp = *"-0"* ]]; then
+    if [[ $pp = *${tele}*"-0"* ]]; then
         echo 'copying' $pp to $coaddprod;
+        echo $im '  ----  ' $coaddprod $'\r' >> $logfile
         if [ ! -d "$coaddprod" ]; then
             echo $coaddprod does not exist. Writing the directory
             mkdir -p "$coaddprod"
@@ -61,7 +68,8 @@ for pp in $prodfiles/*; do
         cp $pp $coaddprod
     else
         echo 'copying '$pp to $outprod;
+        echo $pp '  ----  ' $outprod $'\r' >> $logfile
         cp $pp $outprod
-
+    fi
 done
 
