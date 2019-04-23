@@ -8,7 +8,7 @@ Common tools for multiple ROTSE packages.
 
 # Example run from the current directory (add to PATH for production runs)
 
-./arrangedata /scratch/group/astro/data/ROTSE/rotse21/disk2/rotse3 140903 3b
+./data_manage_M2 /scratch/group/astro/data/ROTSE/rotse21/disk2/rotse3 140903 3b
 
 Copies files to image and prod directories (coadds to separate direcotories) inside outpath. 
 
