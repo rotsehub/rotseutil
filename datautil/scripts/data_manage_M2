@@ -30,7 +30,7 @@ outprod=$outdir'/prod/'
 coaddimg=$outdir'/coadd/image/'
 coaddprod=$outdir'/coadd/prod/'
 
-if [ ! -d "$outimg$" ]; then
+if [ ! -d "$outimg" ]; then
     echo $outimg does not exist. Writing the directory
     mkdir -p "$outimg"
 fi
@@ -41,33 +41,40 @@ if [ ! -d "$outprod" ]; then
 fi
 
 #- copy images and prod
-for im in $imgfiles/*; do
+echo copying to image.....
+coadd_im=0
+raw_im=0
+for im in $imgfiles/*${tele}*; do
     if [[ $im = *${tele}*"-0"* ]]; then
-        echo 'copying' $im to $coaddimg;
+        #-echo 'copying' $im to $coaddimg;
         echo $im '  ----  ' $coaddimg $'\r' >> $logfile
-        if [ ! -d "$coaddimg$" ]; then
+        if [ ! -d "$coaddimg" ]; then
             echo $coaddimg does not exist. Writing the directory;
             mkdir -p "$coaddimg"
         fi
         cp $im $coaddimg
-    else
-        echo 'copying '$im to $outimg;
+        coadd_im=$((coadd_im + 1))
+    elif [[ $im = *${tele}* ]]; then 
+        #- echo 'copying '$im to $outimg;
         echo $im ' ----  ' $outimg $'\r' >> $logfile
         cp $im $outimg
+        raw_im=$((raw_im + 1)) 
     fi
 done
-
-for pp in $prodfiles/*; do
+echo Total Coadded images copied: $coadd_im
+echo Total raw images copied: $raw_im
+echo copying to prod.....
+for pp in $prodfiles/*${tele}*; do
     if [[ $pp = *${tele}*"-0"* ]]; then
-        echo 'copying' $pp to $coaddprod;
+        #- echo 'copying' $pp to $coaddprod;
         echo $im '  ----  ' $coaddprod $'\r' >> $logfile
         if [ ! -d "$coaddprod" ]; then
             echo $coaddprod does not exist. Writing the directory
             mkdir -p "$coaddprod"
         fi
         cp $pp $coaddprod
-    else
-        echo 'copying '$pp to $outprod;
+    elif [[ $pp = *${tele}* ]]; then
+        #- echo 'copying '$pp to $outprod;
         echo $pp '  ----  ' $outprod $'\r' >> $logfile
         cp $pp $outprod
     fi
