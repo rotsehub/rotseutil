@@ -53,12 +53,16 @@ for im in $imgfiles/*${tele}*; do
             mkdir -p "$coaddimg"
         fi
         cp $im $coaddimg
-        coadd_im=$((coadd_im + 1))
+        if [ $? -eq 0 ]; then
+            coadd_im=$((coadd_im + 1))
+        fi
     elif [[ $im = *${tele}* ]]; then 
         #- echo 'copying '$im to $outimg;
         echo $im ' ----  ' $outimg $'\r' >> $logfile
         cp $im $outimg
-        raw_im=$((raw_im + 1)) 
+        if [ $? -eq 0 ]; then
+            raw_im=$((raw_im + 1)) 
+        fi
     fi
 done
 echo Total Coadded images copied: $coadd_im
@@ -75,12 +79,16 @@ for pp in $prodfiles/*${tele}*; do
             mkdir -p "$coaddprod"
         fi
         cp $pp $coaddprod
-        coadd_prod=$((coadd_prod + 1))
+        if [ $? -eq 0 ]; then
+            coadd_prod=$((coadd_prod + 1))
+        fi
     elif [[ $pp = *${tele}* ]]; then
         #- echo 'copying '$pp to $outprod;
         echo $pp '  ----  ' $outprod $'\r' >> $logfile
         cp $pp $outprod
-        raw_prod=$((raw_prod + 1))
+        if [ $? -eq 0 ]; then
+            raw_prod=$((raw_prod + 1))
+        fi
     fi
 done
 
