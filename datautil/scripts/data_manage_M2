@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Example run
-#./arrangedata /scratch/group/astro/data/ROTSE/rotse21/disk2/rotse3 140904 3b
+#./data_manage_M2 /scratch/group/astro/data/ROTSE/rotse21/disk2/rotse3 140904 3b
 
 indir="$1"
 ndate="$2"
