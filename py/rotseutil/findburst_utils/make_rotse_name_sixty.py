@@ -4,7 +4,7 @@ Created on Jul 15, 2017
 @author: arnon
 '''
 
-from rotseutil.sixty import sixty
+from rotseutil.findburst_utils.sixty import sixty
 
 
 def get_sexa(value, with_sign=False):
