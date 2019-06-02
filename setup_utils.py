@@ -258,9 +258,10 @@ def scripts(package):
     return scripts
 
 
-def packages(package):
-    packages_ = []
-    for root, _, _ in os.walk(package, topdown=False):
-        if os.path.isfile(os.path.join(root, '__init__.py')):
-            packages_.append(root)
-    return packages_
+def find_sub_packages(packages):
+    sub_packages = []
+    for package in packages:
+        for root, _, _ in os.walk(package, topdown=False):
+            if os.path.isfile(os.path.join(root, '__init__.py')):
+                sub_packages.append(root)
+    return sub_packages

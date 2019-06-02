@@ -96,7 +96,7 @@ if "install" in sys.argv:
 scripts = scripts()
 
 # Find all sub packages
-packages = setup_utils.packages(PACKAGES)
+packages = setup_utils.find_sub_packages(PACKAGES)
 required = setup_utils.read_required(metafile='REQUIRED')
 
 setup_info = {
