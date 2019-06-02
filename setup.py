@@ -77,6 +77,7 @@ def import_setup_utils():
 setup_utils = import_setup_utils()
 PACKAGES = find_packages('py')
 PACKAGE_DIR = {'':'py'}
+NAME = 'rotseutil'
 DESCRIPTION = ('matchutils is a set of utilities '
                'for converting MATCH structures into FITS')
 
