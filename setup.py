@@ -1,3 +1,4 @@
+from pprint import pprint
 import sys
 import os
 from setuptools import setup, find_packages
@@ -18,6 +19,7 @@ To create package and upload:
 
 '''
 
+
 def get_authors(filename='AUTHORS'):
     ''' reads AUTHORS file.
 
@@ -37,6 +39,7 @@ def get_authors(filename='AUTHORS'):
                 authors_email.append(email)
     return ', '.join(authors), ', '.join(authors_email)
 
+
 def get_version(filename='VERSION'):
     version_file = os.path.join(os.getcwd(), filename)
     version = None
@@ -45,6 +48,7 @@ def get_version(filename='VERSION'):
             content = f.read()
         version = content.strip()
     return version
+
 
 def scripts(bin_path = 'bin'):
     ''' pull all scripts from package/bin.This is not limited to
@@ -58,6 +62,7 @@ def scripts(bin_path = 'bin'):
             if os.path.isfile(file) and not file.endswith('__init__.py'):
                 scripts += [file]
     return scripts
+
 
 def import_setup_utils():
     # load setup utils
@@ -132,6 +137,8 @@ setup_info = {
         'Frameworks',
         'Topic :: Software Development :: Libraries :: Python '
         'Modules']}
+
+pprint(setup_info)
 
 setup(**setup_info)
 
