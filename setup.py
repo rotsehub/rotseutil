@@ -99,7 +99,7 @@ if "install" in sys.argv:
     if existing_path:
         existing_path = ', '.join(existing_path)
 
-scripts = scripts()
+scripts = []  # scripts()
 
 # Find all sub packages
 packages = setup_utils.find_sub_packages(PACKAGES)
