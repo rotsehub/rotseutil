@@ -1,4 +1,4 @@
-from pprint import pprint
+from pprint import pformat
 import sys
 import os
 from setuptools import setup, find_packages
@@ -140,7 +140,7 @@ setup_info = {
 
 
 with open("/tmp/setup_config.log", "w") as f:
-    f.write(pprint(setup_info))
+    f.write(pformat(setup_info))
 
 setup(**setup_info)
 
