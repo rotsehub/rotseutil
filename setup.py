@@ -138,7 +138,9 @@ setup_info = {
         'Topic :: Software Development :: Libraries :: Python '
         'Modules']}
 
-pprint(setup_info)
+
+with open("/tmp/setup_config.log", "w") as f:
+    f.write(pprint(setup_info))
 
 setup(**setup_info)
 
