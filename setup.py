@@ -1,4 +1,3 @@
-from pprint import pformat
 import sys
 import os
 from setuptools import setup, find_packages
@@ -50,7 +49,7 @@ def get_version(filename='VERSION'):
     return version
 
 
-def scripts(bin_path = 'bin'):
+def scripts(bin_path='bin'):
     ''' pull all scripts from package/bin.This is not limited to
     executables, as some scripts are sources.
     '''
@@ -92,7 +91,6 @@ AUTHORS, AUTHOR_EMAILS = get_authors()
 URL = 'N/A'
 VERSION = get_version()
 
-print('PACKAGES', PACKAGES)
 # Find previous installation and warn. See #18115.
 existing_path = []
 if "install" in sys.argv:
@@ -109,8 +107,6 @@ scripts = []  # scripts()
 # packages = setup_utils.find_sub_packages(PACKAGES)
 packages = PACKAGES
 required = setup_utils.read_required(metafile='REQUIRED')
-
-print('packages', packages)
 
 setup_info = {
     'name': NAME,
@@ -147,10 +143,6 @@ setup_info = {
         'Topic :: Software Development :: Libraries :: Python '
         'Modules']}
 
-
-# For debuging of setup!
-with open("/tmp/setup_config.log", "w") as f:
-    f.write(pformat(setup_info))
 
 setup(**setup_info)
 
