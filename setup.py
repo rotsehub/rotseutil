@@ -81,7 +81,7 @@ def import_setup_utils():
 
 setup_utils = import_setup_utils()
 # PACKAGES = setup_utils.find_packages('py')
-PACKAGES = find_packages('py', exclude=("tests",))
+PACKAGES = find_packages('py', exclude=("rotseutil.tests",))
 PACKAGE_DIR = {'': 'py'}
 NAME = 'rotseutil'
 DESCRIPTION = ('matchutils is a set of utilities '
