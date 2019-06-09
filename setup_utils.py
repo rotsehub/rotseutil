@@ -264,4 +264,4 @@ def find_sub_packages(packages):
         for root, _, _ in os.walk(package, topdown=False):
             if os.path.isfile(os.path.join(root, '__init__.py')):
                 sub_packages.append(root)
-    return sub_packages
+    return list(set(sub_packages))

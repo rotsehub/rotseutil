@@ -80,7 +80,6 @@ def import_setup_utils():
 
 
 setup_utils = import_setup_utils()
-# PACKAGES = setup_utils.find_packages('py')
 PACKAGES = find_packages('py')
 PACKAGE_DIR = {'':'py'}
 NAME = 'rotseutil'
@@ -106,46 +105,41 @@ if "install" in sys.argv:
 scripts = []  # scripts()
 
 # Find all sub packages
-# packages = setup_utils.find_sub_packages(PACKAGES)
-packages = PACKAGES
+packages = setup_utils.find_sub_packages(PACKAGES)
 required = setup_utils.read_required(metafile='REQUIRED')
 
-print('packages', packages)
-
 setup_info = {
-    'name': NAME,
-    'version': VERSION,
-    'url': URL,
-    'author': AUTHORS,
-    'author_email': AUTHOR_EMAILS,
-    'description': DESCRIPTION,
+    'author': 'Daniel Sela, Dr. Robert Kehoe, Arnon Sela, Govinda',
+ 'author_email': 'danielsela42@gmail.com, kehoe@physics.smu.edu, '
+                 'arnonsela42@gmail.com, Dhungana',
+ 'classifiers': ['Development Status :: 5 - Production/Stable',
+                 'Environment :: Other Environment',
+                 'Intended Audience :: Developers',
+                 'License :: OSI Approved :: MIT License',
+                 'Operating System :: OS Independent',
+                 'Programming Language :: Python',
+                 'Programming Language :: Python :: 3',
+                 'Programming Language :: Python :: 3.2',
+                 'Programming Language :: Python :: 3.3',
+                 'Programming Language :: Python :: 3.4',
+                 'Programming Language :: Python :: 3.5',
+                 'Topic :: Software Development :: Libraries :: Application '
+                 'Frameworks',
+                 'Topic :: Software Development :: Libraries :: Python '
+                 'Modules'],
+ 'description': 'matchutils is a set of utilities for converting MATCH '
+                'structures into FITS',
+ 'extras_require': {'dev': [], 'test': []},
+ 'install_requires': ['astropy>=2.0.2', 'numpy>=1.13.1', 'scipy>=0.19.1'],
+ 'keywords': 'library sequence logger yield singleton thread synchronize '
+             'resource pool utilities os ssh xml excel mail',
+ 'license': 'MIT',
+
     'long_description': open("README.rst", "r").read(),
-    'license': 'MIT',
-    'keywords': ('library sequence logger yield singleton thread synchronize'
-                 ' resource pool utilities os ssh xml excel mail'),
-    'package_dir': {'rotseutil': 'py/rotseutil'},
-    'packages': ['rotseutil'],
-    'scripts': scripts,
-    'install_requires': required,
-    'extras_require': {'dev': [], 'test': []},
-    'classifiers': [
-        'Development Status :: 5 - Production/Stable',
-        'Environment :: Other Environment',
-        # 'Framework :: Project Settings and Operation',
-        'Intended Audience :: Developers',
-        'License :: OSI Approved :: MIT License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.2',
-        'Programming Language :: Python :: 3.3',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
-        'Programming Language :: Python :: 3.6',
-        'Topic :: Software Development :: Libraries :: Application '
-        'Frameworks',
-        'Topic :: Software Development :: Libraries :: Python '
-        'Modules']}
+'name': 'rotseutil',
+ 'packages': PACKAGES,
+ 'scripts': [],
+ 'url': ['N/A']}
 
 
 # For debuging of setup!
