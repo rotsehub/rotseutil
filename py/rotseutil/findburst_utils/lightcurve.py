@@ -6,7 +6,7 @@ Created on Jul 21, 2017
 
 import numpy as np
 from scipy import stats as scistats
-from rotseutil.meanabsdev import meanabsdev
+from rotseutil.findburst_utils.meanabsdev import meanabsdev
 
 
 def lightcurve(mag, err, m_lim, thresh, errfact, var):

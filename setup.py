@@ -18,6 +18,7 @@ To create package and upload:
 
 '''
 
+
 def get_authors(filename='AUTHORS'):
     ''' reads AUTHORS file.
 
@@ -37,6 +38,7 @@ def get_authors(filename='AUTHORS'):
                 authors_email.append(email)
     return ', '.join(authors), ', '.join(authors_email)
 
+
 def get_version(filename='VERSION'):
     version_file = os.path.join(os.getcwd(), filename)
     version = None
@@ -46,7 +48,8 @@ def get_version(filename='VERSION'):
         version = content.strip()
     return version
 
-def scripts(bin_path = 'bin'):
+
+def scripts(bin_path='bin'):
     ''' pull all scripts from package/bin.This is not limited to
     executables, as some scripts are sources.
     '''
@@ -58,6 +61,7 @@ def scripts(bin_path = 'bin'):
             if os.path.isfile(file) and not file.endswith('__init__.py'):
                 scripts += [file]
     return scripts
+
 
 def import_setup_utils():
     # load setup utils
@@ -75,8 +79,10 @@ def import_setup_utils():
 
 
 setup_utils = import_setup_utils()
-PACKAGES = find_packages('py')
-PACKAGE_DIR = {'':'py'}
+# PACKAGES = setup_utils.find_packages('py')
+PACKAGES = find_packages('py', exclude=("rotseutil.tests",))
+PACKAGE_DIR = {'': 'py'}
+NAME = 'rotseutil'
 DESCRIPTION = ('matchutils is a set of utilities '
                'for converting MATCH structures into FITS')
 
@@ -89,15 +95,18 @@ VERSION = get_version()
 existing_path = []
 if "install" in sys.argv:
     for p in PACKAGES:
-        existing_path += setup_utils.existing_package(p)
+        package = setup_utils.existing_package(p)
+        if package:
+            existing_path += package
     if existing_path:
         existing_path = ', '.join(existing_path)
 
-scripts = scripts()
+scripts = []  # scripts()
 
 # Find all sub packages
-packages = setup_utils.packages(PACKAGE)
-required = setup_utils.read_required(metahost=metahost)
+# packages = setup_utils.find_sub_packages(PACKAGES)
+packages = PACKAGES
+required = setup_utils.read_required(metafile='REQUIRED')
 
 setup_info = {
     'name': NAME,
@@ -110,6 +119,7 @@ setup_info = {
     'license': 'MIT',
     'keywords': ('library sequence logger yield singleton thread synchronize'
                  ' resource pool utilities os ssh xml excel mail'),
+    'package_dir': {'': 'py'},
     'packages': packages,
     'scripts': scripts,
     'install_requires': required,
@@ -127,10 +137,12 @@ setup_info = {
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
         'Topic :: Software Development :: Libraries :: Application '
         'Frameworks',
         'Topic :: Software Development :: Libraries :: Python '
         'Modules']}
+
 
 setup(**setup_info)
 
