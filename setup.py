@@ -123,8 +123,8 @@ setup_info = {
     'license': 'MIT',
     'keywords': ('library sequence logger yield singleton thread synchronize'
                  ' resource pool utilities os ssh xml excel mail'),
-    'package_dir': {'rotseutil': 'py/rotseutil'},
-    'packages': ['rotseutil'],
+    'package_dir': {'': 'py'},
+    'packages': packages,
     'scripts': scripts,
     'install_requires': required,
     'extras_require': {'dev': [], 'test': []},
