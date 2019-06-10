@@ -4,22 +4,27 @@
 #./data_manage_M2 /scratch/group/astro/data/ROTSE/rotse21/disk2/rotse3 140904 3b
 
 indir="$1"
-ndate="$2"
-tele="$3"
+cd $indir
 
-imgfiles=$indir'/'$ndate'/image/'
-prodfiles=$indir'/'$ndate'/prod/'
+ndates=$(ls -d */ | sed 's#/##')
 
-yy=${ndate:0:2}
-mm=${ndate:2:2}
-dd=${ndate:4:2}
+for ndate in $ndates; do
+    #ndate="$2"
+    tele="3b"
+    imgfiles=$indir'/'$ndate'/image/'
+    prodfiles=$indir'/'$ndate'/prod/'
 
-echo $yy $mm $dd
+    yy=${ndate:0:2}
+    mm=${ndate:2:2}
+    dd=${ndate:4:2}
 
-#outpath='/users/gdhungana/test_m2/m2manage'
-outpath='/scratch/group/astro/data/ROTSE'
+    echo $yy $mm $dd
+    #outpath='/users/gdhungana/test_m2/m2manage'
+    outpath='/scratch/group/astro/data/ROTSE'
+    copy_files $ndate $tele
+
+
 outdir=$outpath'/rdata/'${tele}'/'$yy'/'$mm'/'$dd
-
 logfile=$outpath'/rdata/'$ndate'_'$tele'_copylog.txt'
 echo Log file is $logfile
 
