@@ -2,21 +2,8 @@
 
 # Example run
 #./data_manage_M2 /scratch/group/astro/data/ROTSE/rotse21/disk2/rotse3 140904 3b
-
-indir="$1"
-cd $indir
-ndates=$(ls -d */ | sed 's#/##' | grep [0-9])
-#ndates=$(ls -d +([0-9])) # -d #-d +([0-9]))"
-#ndates=$(ls -d | grep [0-9])
-echo dates: $ndates
-for ndate in $ndates; do
-    #outpath='/users/gdhungana/test_m2/m2manage'
-    outpath='/scratch/group/astro/data/ROTSE'
-    for tele in '3a' '3b' '3c' '3d'; do
-        echo copying ROTSE files of $ndate telescope $tele
-        copy_files $ndate $tele
-    done
-done
+#- update: 6/10/19 - loops all numeric directories and for all telescope type 3a,3b,3c,3d
+#-./data_manage_M2 /scratch/group/astro/data/ROTSE/rotse21/disk2/rotse3
 
 copy_files() {
     ndate=$1
@@ -98,3 +85,19 @@ copy_files() {
     echo Total Coadded prod files copied: $coadd_prod
     echo Total raw prod files copied: $raw_prod
 }
+
+indir="$1"
+cd $indir
+ndates=$(ls -d */ | sed 's#/##' | grep [0-9])
+#ndates=$(ls -d +([0-9])) # -d #-d +([0-9]))"
+#ndates=$(ls -d | grep [0-9])
+echo dates: $ndates
+for ndate in $ndates; do
+    #outpath='/users/gdhungana/test_m2/m2manage'
+    outpath='/scratch/group/astro/data/ROTSE'
+    for tele in '3a' '3b' '3c' '3d'; do
+        echo copying ROTSE files of $ndate telescope $tele
+        copy_files $ndate $tele
+    done
+done
+
