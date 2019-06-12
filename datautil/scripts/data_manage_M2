@@ -5,25 +5,28 @@
 
 indir="$1"
 cd $indir
-
-ndates=$(ls -d */ | sed 's#/##')
-
+ndates=$(ls -d */ | sed 's#/##' | grep [0-9])
+#ndates=$(ls -d +([0-9])) # -d #-d +([0-9]))"
+#ndates=$(ls -d | grep [0-9])
+echo dates: $ndates
 for ndate in $ndates; do
-    #ndate="$2"
-    tele="3b"
+    #outpath='/users/gdhungana/test_m2/m2manage'
+    outpath='/scratch/group/astro/data/ROTSE'
+    for tele in '3a' '3b' '3c' '3d'; do
+        echo copying ROTSE files of $ndate telescope $tele
+        copy_files $ndate $tele
+    done
+done
+
+copy_files() {
+    ndate=$1
+    tele=$2
     imgfiles=$indir'/'$ndate'/image/'
     prodfiles=$indir'/'$ndate'/prod/'
-
     yy=${ndate:0:2}
     mm=${ndate:2:2}
     dd=${ndate:4:2}
-
     echo $yy $mm $dd
-    #outpath='/users/gdhungana/test_m2/m2manage'
-    outpath='/scratch/group/astro/data/ROTSE'
-    copy_files $ndate $tele
-
-copy_files() {
     outdir=$outpath'/rdata/'$tele'/'$yy'/'$mm'/'$dd
     logfile=$outpath'/rdata/'$ndate'_'$tele'_copylog.txt'
     echo Log file is $logfile
@@ -94,4 +97,4 @@ copy_files() {
     done
     echo Total Coadded prod files copied: $coadd_prod
     echo Total raw prod files copied: $raw_prod
-
+}
