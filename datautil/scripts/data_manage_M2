@@ -50,6 +50,7 @@ copy_files() {
             else
                 cp $im $coaddimg
                 echo $im '  ----  ' $coaddimg $'\r' >> $logfile
+            fi
             if [ $? -eq 0 ]; then
                 coadd_im=$((coadd_im + 1))
             fi
@@ -62,6 +63,7 @@ copy_files() {
             else
                 cp $im $outimg
                 echo $im '  ----  ' $outimg $'\r' >> $logfile
+            fi
             if [ $? -eq 0 ]; then
                 raw_im=$((raw_im + 1)) 
             fi
@@ -87,6 +89,7 @@ copy_files() {
             else
                 cp $pp $coaddprod
                 echo $pp '  ----  ' $coaddprod $'\r' >> $logfile
+            fi
             if [ $? -eq 0 ]; then
                 coadd_prod=$((coadd_prod + 1))
             fi
@@ -100,7 +103,7 @@ copy_files() {
             else
                 cp $pp $outprod
                 echo $pp '  ----  ' $outprod $'\r' >> $logfile
-
+            fi
             if [ $? -eq 0 ]; then
                 raw_prod=$((raw_prod + 1))
             fi
