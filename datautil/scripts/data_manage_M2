@@ -15,7 +15,7 @@ copy_files() {
     dd=${ndate:4:2}
     echo $yy $mm $dd
     outdir=$outpath'/rdata/'$tele'/'$yy'/'$mm'/'$dd
-    logfile=$outpath'/rdata/'$ndate'_'$tele'_copylog.txt'
+    logfile=$outpath'/rdata/copylog/'$ndate'_'$tele'_copylog.txt'
     echo Log file is $logfile
     outimg=$outdir'/image/'
     outprod=$outdir'/prod/'
