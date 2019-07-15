@@ -46,7 +46,7 @@ copy_files() {
             #- check for duplicates
             imfile=$(echo $im | xargs -n 1 basename)
             if [ -f "$coaddimg/$imfile" ]; then
-                echo 'DUPLICATE!!! '$im ' already exists. Not copying.....' $'\r' >> logfile
+                echo 'DUPLICATE!!! '$im ' already exists. Not copying.....' $'\r' >> $logfile
             else
                 cp $im $coaddimg
                 echo $im '  ----  ' $coaddimg $'\r' >> $logfile
@@ -59,7 +59,7 @@ copy_files() {
             #- check for duplicates
             imfile=$(echo $im | xargs -n 1 basename)
             if [ -f "$outimg/$imfile" ]; then
-                echo 'DUPLICATE!!! '$im ' already exists. Not copying.....' $'\r' >> logfile
+                echo 'DUPLICATE!!! '$im ' already exists. Not copying.....' $'\r' >> $logfile
             else
                 cp $im $outimg
                 echo $im '  ----  ' $outimg $'\r' >> $logfile
