@@ -15,7 +15,7 @@ copy_files() {
     dd=${ndate:4:2}
     echo $yy $mm $dd
     outdir=$outpath'/rdata/'$tele'/'$yy'/'$mm'/'$dd
-    logfile=$outpath'/rdata/'$ndate'_'$tele'_copylog.txt'
+    logfile=$outpath'/rdata/copylog/'$ndate'_'$tele'_copylog.txt'
     echo Log file is $logfile
     outimg=$outdir'/image/'
     outprod=$outdir'/prod/'
@@ -38,19 +38,32 @@ copy_files() {
     for im in $imgfiles/*${tele}*; do
         if [[ $im = *${tele}*"-0"* ]]; then
             #-echo 'copying' $im to $coaddimg;
-            echo $im '  ----  ' $coaddimg $'\r' >> $logfile
+            #echo $im '  ----  ' $coaddimg $'\r' >> $logfile
             if [ ! -d "$coaddimg" ]; then
                 echo $coaddimg does not exist. Writing the directory;
                 mkdir -p "$coaddimg"
             fi
-            cp $im $coaddimg
+            #- check for duplicates
+            imfile=$(echo $im | xargs -n 1 basename)
+            if [ -f "$coaddimg/$imfile" ]; then
+                echo 'DUPLICATE!!! '$im ' already exists. Not copying.....' $'\r' >> $logfile
+            else
+                cp $im $coaddimg
+                echo $im '  ----  ' $coaddimg $'\r' >> $logfile
+            fi
             if [ $? -eq 0 ]; then
                 coadd_im=$((coadd_im + 1))
             fi
         elif [[ $im = *${tele}* ]]; then 
             #- echo 'copying '$im to $outimg;
-            echo $im ' ----  ' $outimg $'\r' >> $logfile
-            cp $im $outimg
+            #- check for duplicates
+            imfile=$(echo $im | xargs -n 1 basename)
+            if [ -f "$outimg/$imfile" ]; then
+                echo 'DUPLICATE!!! '$im ' already exists. Not copying.....' $'\r' >> $logfile
+            else
+                cp $im $outimg
+                echo $im '  ----  ' $outimg $'\r' >> $logfile
+            fi
             if [ $? -eq 0 ]; then
                 raw_im=$((raw_im + 1)) 
             fi
@@ -64,19 +77,33 @@ copy_files() {
     for pp in $prodfiles/*${tele}*; do
         if [[ $pp = *${tele}*"-0"* ]]; then
             #- echo 'copying' $pp to $coaddprod;
-            echo $im '  ----  ' $coaddprod $'\r' >> $logfile
+            #echo $pp '  ----  ' $coaddprod $'\r' >> $logfile
             if [ ! -d "$coaddprod" ]; then
                 echo $coaddprod does not exist. Writing the directory
                 mkdir -p "$coaddprod"
             fi
-            cp $pp $coaddprod
+            #- check for duplicates
+            prodfile=$(echo $pp | xargs -n 1 basename)
+            if [ -f "$coaddprod/$prodfile" ]; then
+                echo 'DUPLICATE!!! '$pp ' already exists. Not copying.....' $'\r' >> $logfile
+            else
+                cp $pp $coaddprod
+                echo $pp '  ----  ' $coaddprod $'\r' >> $logfile
+            fi
             if [ $? -eq 0 ]; then
                 coadd_prod=$((coadd_prod + 1))
             fi
         elif [[ $pp = *${tele}* ]]; then
             #- echo 'copying '$pp to $outprod;
-            echo $pp '  ----  ' $outprod $'\r' >> $logfile
-            cp $pp $outprod
+
+            #- check for duplicates
+            prodfile=$(echo $pp | xargs -n 1 basename)
+            if [ -f "$outprod/$prodfile" ]; then
+                echo 'DUPLICATE!!! '$pp ' already exists. Not copying.....' $'\r' >> $logfile
+            else
+                cp $pp $outprod
+                echo $pp '  ----  ' $outprod $'\r' >> $logfile
+            fi
             if [ $? -eq 0 ]; then
                 raw_prod=$((raw_prod + 1))
             fi
