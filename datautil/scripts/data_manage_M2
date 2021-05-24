@@ -16,6 +16,7 @@ copy_files() {
     echo $yy $mm $dd
     outdir=$outpath'/rdata/'$tele'/'$yy'/'$mm'/'$dd
     logfile=$outpath'/rdata/copylog/'$ndate'_'$tele'_copylog.txt'
+    logfileExec=$outpath'/rdata/copylog/'$ndate'_'$tele'_copylog.sh'
     echo Log file is $logfile
     outimg=$outdir'/image/'
     outprod=$outdir'/prod/'
@@ -49,7 +50,8 @@ copy_files() {
                 echo 'DUPLICATE!!! '$im ' already exists. Not copying.....' $'\r' >> $logfile
             else
                 cp $im $coaddimg
-                echo $im '  ----  ' $coaddimg $'\r' >> $logfile
+                echo $im '  ----  ' $coaddimg $imfile $'\r' >> $logfile
+                echo 'diff ' $cwd/$im ' ' $coaddimg$imfile $'\n' >> $logfileExec
             fi
             if [ $? -eq 0 ]; then
                 coadd_im=$((coadd_im + 1))
@@ -62,7 +64,8 @@ copy_files() {
                 echo 'DUPLICATE!!! '$im ' already exists. Not copying.....' $'\r' >> $logfile
             else
                 cp $im $outimg
-                echo $im '  ----  ' $outimg $'\r' >> $logfile
+                echo $im '  ----  ' $outimg$imfile $'\r' >> $logfile
+                echo 'diff ' $cwd/$im ' ' $outimg$imfile $'\n' >> $logfileExec
             fi
             if [ $? -eq 0 ]; then
                 raw_im=$((raw_im + 1)) 
@@ -112,16 +115,21 @@ copy_files() {
     echo Total Coadded prod files copied: $coadd_prod
     echo Total raw prod files copied: $raw_prod
 }
-
+cwd=$(pwd)
 indir="$1"
 cd $indir
 ndates=$(ls -d */ | sed 's#/##' | grep [0-9])
 #ndates=$(ls -d +([0-9])) # -d #-d +([0-9]))"
 #ndates=$(ls -d | grep [0-9])
 echo dates: $ndates
+cd $cwd
+echo "Change outpath below to your intended output directory"
+echo "under that directory, create directories rdata and rdata/copylog"
+echo "then remove this text and the abort below"
+echo "goodbye"
+exit 12345
 for ndate in $ndates; do
-    #outpath='/users/gdhungana/test_m2/m2manage'
-    outpath='/scratch/group/astro/data/ROTSE'
+    outpath='/scratch/group/astro/rotse/data/debug_jl3/'
     for tele in '3a' '3b' '3c' '3d'; do
         echo copying ROTSE files of $ndate telescope $tele
         copy_files $ndate $tele
