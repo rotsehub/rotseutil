@@ -109,18 +109,19 @@ def readCurve(file, rightAscension, declination):
 
 if __name__ == "__main__":
     import argparse
+    from evalboolarg import evalBoolArg
     from writecurve import saveLightCurve
     from convert2decicoords import convertCoords2Deci
     parser = argparse.ArgumentParser()
     parser.add_argument('matchDir', type = str, help = 'Path to match structure directory')
     parser.add_argument('rightAscension', type = str, help = 'Target\'s right ascension')
     parser.add_argument('declination', type = str, help = 'Target\'s declination')
-    parser.add_argument('--truncateFields', '-t', type = bool, choices = [True, False], default = False, help = 'Truncate observations\' fields to epoch, magnitude, and error')
+    parser.add_argument('--truncateFields', '-t', type = str, default = False, help = 'Truncate observations\' fields to epoch, magnitude, and error')
     args = parser.parse_args()
     matchDir = args.matchDir
     rightAscension = args.rightAscension
     declination = args.declination
-    truncateFields = args.truncateFields
+    truncateFields = evalBoolArg(args.truncateFields, False)
     rightAscension, declination = convertCoords2Deci(rightAscension, declination)
     lightCurve = openMatchStructures(matchDir, rightAscension, declination)
     fileName = f'extractedlightcurve_ra{(rightAscension):.5f}_dec{(declination):.5f}'

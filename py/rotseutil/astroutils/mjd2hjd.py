@@ -1,5 +1,3 @@
-from evalboolarg import evalBoolArg
-
 def mjd2hjd(lightCurve, rightAscension, declination, epoch, truncateHjd):
     from math import radians, sin, cos
     from convert2decicoords import convertCoords2Deci
@@ -27,6 +25,7 @@ def mjd2hjd(lightCurve, rightAscension, declination, epoch, truncateHjd):
 
 if __name__ == "__main__":
     import argparse
+    from evalboolarg import evalBoolArg
     from readcurve import readCurve
     from writecurve import saveLightCurve
     from convert2decicoords import convertCoords2Deci

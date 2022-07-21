@@ -1,5 +1,3 @@
-from evalboolarg import evalBoolArg
-
 def mergeLightCurves(fileA, fileB):
     from readcurve import openLightCurve
     mergedLightCurve = openLightCurve(fileA) + openLightCurve(fileB)
@@ -8,6 +6,7 @@ def mergeLightCurves(fileA, fileB):
 
 if __name__ == "__main__":
     import argparse
+    from evalboolarg import evalBoolArg
     from writecurve import saveLightCurve
     parser = argparse.ArgumentParser()
     parser.add_argument('fileA', help = 'Path to data file for light curve A')
