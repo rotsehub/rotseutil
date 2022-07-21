@@ -1,3 +1,5 @@
+from evalboolarg import evalBoolArg
+
 def mjd2hjd(lightCurve, rightAscension, declination, epoch, truncateHjd):
     from math import radians, sin, cos
     from convert2decicoords import convertCoords2Deci
@@ -25,23 +27,23 @@ def mjd2hjd(lightCurve, rightAscension, declination, epoch, truncateHjd):
 
 if __name__ == "__main__":
     import argparse
-    from openlightcurve import openLightCurve
-    from savelightcurve import saveLightCurve
+    from readcurve import openLightCurve
+    from writecurve import saveLightCurve
     from convert2decicoords import convertCoords2Deci
     parser = argparse.ArgumentParser()
     parser.add_argument('file', type = str, help = 'Path to target\'s light curve file')
     parser.add_argument('rightAscension', type = str, help = 'Target\'s right ascension')
     parser.add_argument('declination', type = str, help = 'Target\'s declination')
     parser.add_argument('--epoch', '-e', type = float, default = 0, help = 'Extract specific epoch converted to HJD')
-    parser.add_argument('--truncateHjd', '-t', type = bool, choices = [True, False], default = False, help = 'Truncate HJD to HJD-2400000')
-    parser.add_argument('--verbose', '-v', type = bool, choices = [True, False], default = False, help = 'Print HJD light curve to terminal')
+    parser.add_argument('--truncateHjd', '-t', type = str, default = False, help = 'Truncate HJD to HJD-2400000')
+    parser.add_argument('--verbose', '-v', type = str, default = False, help = 'Print HJD light curve to terminal')
     args = parser.parse_args()
     file = args.file
     rightAscension = args.rightAscension
     declination = args.declination
     epoch = args.epoch
-    truncateHjd = args.truncateHjd
-    verbose = args.verbose
+    truncateHjd = evalBoolArg(args.truncateHjd)
+    verbose = evalBoolArg(args.verbose)
     lightCurve = openLightCurve(file)
     HjdLightCurve, HjdEpoch = mjd2hjd(lightCurve, rightAscension, declination, epoch, truncateHjd)
     if verbose:
@@ -50,5 +52,4 @@ if __name__ == "__main__":
     if epoch != 0:
         print(f'HJD Epoch: {HjdEpoch}')
     deciRightAscension, deciDeclination = convertCoords2Deci(rightAscension, declination)
-    fileName = f'HJDlightcurve_ra{(deciRightAscension):.5f}_dec{(deciDeclination):.5f}'
-    saveLightCurve(HjdLightCurve, fileName)
+    saveLightCurve(HjdLightCurve, f'HJDlightcurve_ra{(deciRightAscension):.5f}_dec{(deciDeclination):.5f}.dat')

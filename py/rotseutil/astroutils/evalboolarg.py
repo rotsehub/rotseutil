@@ -1,11 +1,14 @@
-def evalBoolArg(argument, defaultState):
-    if argument == True or argument == False:
-        pass
-    elif argument.upper() == 'True':
-        argument = True
+from email.policy import default
+
+
+def evalBoolArg(argument, default):
+    if isinstance(argument, bool):
+        return argument
+    elif argument == None:
+        return default
+    elif argument.upper() == 'TRUE':
+        return True
     elif argument.upper() == 'FALSE':
-        argument = False
+        return False
     else:
-        argument = defaultState
-    return argument
-    
+        return default

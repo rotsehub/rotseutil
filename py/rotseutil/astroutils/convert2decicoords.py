@@ -16,4 +16,4 @@ if __name__ == "__main__":
     rightAscension = args.rightAscension
     declination = args.declination
     deciRightAscension, deciDeclination = convertCoords2Deci(rightAscension, declination)
-    print(f"Decimal Right Ascension: {deciRightAscension}\nDecimal Declination: {deciDeclination}")
+    print(f"Decimal Right Ascension: {deciRightAscension:.5f}\nDecimal Declination: {deciDeclination:.5f}")

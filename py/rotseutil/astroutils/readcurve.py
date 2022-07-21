@@ -1,4 +1,10 @@
-def openMatchStructures(file, rightAscension, declination, verbose):
+def openLightCurve(file):
+    data = [x.split() for x in list(open(file).read().splitlines())]
+    lightCurve = [[float(n) for n in x] for x in data]
+    lightCurve.sort()
+    return lightCurve
+
+def openMatchStructures(file, rightAscension, declination):
     import os
     import glob
     from scipy.io import readsav
@@ -66,8 +72,7 @@ def openMatchStructures(file, rightAscension, declination, verbose):
                 print(f"Target found in {match}")
                 filteredMatchStructures.append(match)
             except IndexError:
-                if verbose:
-                    print(f"Cannot find target in {match}; this match structure was removed from the list")
+                #print(f"Cannot find target in {match}; this match structure was removed from the list")
                 pass
         return filteredMatchStructures, targetLightCurve
     
@@ -94,23 +99,29 @@ def openMatchStructures(file, rightAscension, declination, verbose):
     lightCurve.sort()
     return lightCurve
 
+def readCurve(file, rightAscension, declination):
+    import os
+    if os.path.isdir(file):
+        curve = openMatchStructures(file, rightAscension, declination)
+    else:
+        curve = openLightCurve(file)
+    return curve
+
 if __name__ == "__main__":
     import argparse
-    from savelightcurve import saveLightCurve
+    from writecurve import saveLightCurve
     from convert2decicoords import convertCoords2Deci
     parser = argparse.ArgumentParser()
     parser.add_argument('matchDir', type = str, help = 'Path to match structure directory')
     parser.add_argument('rightAscension', type = str, help = 'Target\'s right ascension')
     parser.add_argument('declination', type = str, help = 'Target\'s declination')
     parser.add_argument('--truncateFields', '-t', type = bool, choices = [True, False], default = False, help = 'Truncate observations\' fields to epoch, magnitude, and error')
-    parser.add_argument('--verbose', '-v', type = bool, choices = [True, False], default = False, help = 'Print light curve and additional info to terminal')
     args = parser.parse_args()
     matchDir = args.matchDir
     rightAscension = args.rightAscension
     declination = args.declination
     truncateFields = args.truncateFields
-    verbose = args.verbose
     rightAscension, declination = convertCoords2Deci(rightAscension, declination)
-    lightCurve = openMatchStructures(matchDir, rightAscension, declination, verbose)
+    lightCurve = openMatchStructures(matchDir, rightAscension, declination)
     fileName = f'extractedlightcurve_ra{(rightAscension):.5f}_dec{(declination):.5f}'
     saveLightCurve(lightCurve, fileName)
