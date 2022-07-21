@@ -1,6 +1,3 @@
-from email.policy import default
-
-
 def evalBoolArg(argument, default):
     if isinstance(argument, bool):
         return argument
