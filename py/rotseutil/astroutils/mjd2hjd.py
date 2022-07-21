@@ -27,7 +27,7 @@ def mjd2hjd(lightCurve, rightAscension, declination, epoch, truncateHjd):
 
 if __name__ == "__main__":
     import argparse
-    from readcurve import openLightCurve
+    from readcurve import readCurve
     from writecurve import saveLightCurve
     from convert2decicoords import convertCoords2Deci
     parser = argparse.ArgumentParser()
@@ -44,7 +44,7 @@ if __name__ == "__main__":
     epoch = args.epoch
     truncateHjd = evalBoolArg(args.truncateHjd)
     verbose = evalBoolArg(args.verbose)
-    lightCurve = openLightCurve(file)
+    lightCurve = readCurve(file, rightAscension, declination)
     HjdLightCurve, HjdEpoch = mjd2hjd(lightCurve, rightAscension, declination, epoch, truncateHjd)
     if verbose:
         for x in HjdLightCurve:
