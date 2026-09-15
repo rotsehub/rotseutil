@@ -47,7 +47,7 @@ def lightcurve(mag, err, m_lim, thresh, errfact, var):
         if len(i) > 0:
             iobs = np.argmax(sigs[i])
             maxerr[l] = sigs[i][iobs]
-            maxdelta[l] = diffs[iobs]
+            maxdelta[l] = diffs[i][iobs]
 
     iobs = np.argmax(maxerr)
     var.bestsig = maxerr[iobs]
